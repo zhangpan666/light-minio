@@ -22,6 +22,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * MinIO 客户端工具类
@@ -371,7 +372,7 @@ public class MinioClientUtils {
      * @param expires    失效时间（以秒为单位），默认是7天，不得大于七天
      * @return String
      */
-    public String presignedPutObject(String bucketName, String objectName, Integer expires) throws IOException, InvalidResponseException, InvalidKeyException, NoSuchAlgorithmException, ServerException, ErrorResponseException, XmlParserException, InvalidBucketNameException, InsufficientDataException, InternalException {
+    public String presignedPutObject(String bucketName, String objectName, Integer expires, TimeUnit timeUnit) throws IOException, InvalidResponseException, InvalidKeyException, NoSuchAlgorithmException, ServerException, ErrorResponseException, XmlParserException, InvalidBucketNameException, InsufficientDataException, InternalException {
         boolean flag = bucketExists(bucketName);
         String url = "";
         if (flag) {
@@ -388,9 +389,9 @@ public class MinioClientUtils {
                         .method(Method.PUT)
                         .bucket(bucketName)
                         .object(objectName)
-                        .expiry(expires)//动态参数
+//                        .expiry(expires)//动态参数
                         //                       .expiry(24 * 60 * 60)//用秒来计算一天时间有效期
-//                        .expiry(1, TimeUnit.DAYS)//按天传参
+                        .expiry(expires, timeUnit)//按天传参
 //                        .expiry(1, TimeUnit.HOURS)//按小时传参数
                         .build());
             } catch (ErrorResponseException | InsufficientDataException e) {
