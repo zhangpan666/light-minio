@@ -10,6 +10,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 
+/**
+ * @author zz
+ */
 @Configuration
 @Component
 @ConfigurationProperties(prefix = "spring.minio")
